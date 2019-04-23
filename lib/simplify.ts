@@ -1,7 +1,7 @@
-var exif = require('./exif')
-var date = require('./date')
+const exif = require('./exif')
+const date = require('./date')
 
-var degreeTags = [
+const degreeTags = [
   {
     section: exif.GPSIFD,
     type: 0x0002,
@@ -21,7 +21,7 @@ var degreeTags = [
   },
 ]
 
-var dateTags = [
+const dateTags = [
   {
     section: exif.SubIFD,
     type: 0x0132,
@@ -48,30 +48,30 @@ var dateTags = [
 ]
 
 export default {
-  castDegreeValues: function(getTagValue, setTagValue) {
+  castDegreeValues(getTagValue, setTagValue) {
     degreeTags.forEach(function(t) {
-      var degreeVal = getTagValue(t)
+      const degreeVal = getTagValue(t)
       if (degreeVal) {
-        var degreeRef = getTagValue({ section: t.section, type: t.refType, name: t.refName })
-        var degreeNumRef = degreeRef === t.posVal ? 1 : -1
-        var degree = (degreeVal[0] + degreeVal[1] / 60 + degreeVal[2] / 3600) * degreeNumRef
+        const degreeRef = getTagValue({ section: t.section, type: t.refType, name: t.refName })
+        const degreeNumRef = degreeRef === t.posVal ? 1 : -1
+        const degree = (degreeVal[0] + degreeVal[1] / 60 + degreeVal[2] / 3600) * degreeNumRef
         setTagValue(t, degree)
       }
     })
   },
-  castDateValues: function(getTagValue, setTagValue) {
+  castDateValues(getTagValue, setTagValue) {
     dateTags.forEach(function(t) {
-      var dateStrVal = getTagValue(t)
+      const dateStrVal = getTagValue(t)
       if (dateStrVal) {
-        //some easy checks to determine two common date formats
-        var timestamp = date.parseExifDate(dateStrVal)
+        // some easy checks to determine two common date formats
+        const timestamp = date.parseExifDate(dateStrVal)
         if (typeof timestamp !== 'undefined') {
           setTagValue(t, timestamp)
         }
       }
     })
   },
-  simplifyValue: function(values, format) {
+  simplifyValue(values, format) {
     if (Array.isArray(values)) {
       values = values.map(function(value) {
         if (format === 10 || format === 5) {

@@ -7,78 +7,78 @@ function BufferStream(buffer, offset?: any, length?: any, bigEndian?: any) {
 }
 
 BufferStream.prototype = {
-  setBigEndian: function(bigEndian) {
+  setBigEndian(bigEndian) {
     this.bigEndian = !!bigEndian
   },
-  nextUInt8: function() {
-    var value = this.buffer.readUInt8(this.offset)
+  nextUInt8() {
+    const value = this.buffer.readUInt8(this.offset)
     this.offset += 1
     return value
   },
-  nextInt8: function() {
-    var value = this.buffer.readInt8(this.offset)
+  nextInt8() {
+    const value = this.buffer.readInt8(this.offset)
     this.offset += 1
     return value
   },
-  nextUInt16: function() {
-    var value = this.bigEndian
+  nextUInt16() {
+    const value = this.bigEndian
       ? this.buffer.readUInt16BE(this.offset)
       : this.buffer.readUInt16LE(this.offset)
     this.offset += 2
     return value
   },
-  nextUInt32: function() {
-    var value = this.bigEndian
+  nextUInt32() {
+    const value = this.bigEndian
       ? this.buffer.readUInt32BE(this.offset)
       : this.buffer.readUInt32LE(this.offset)
     this.offset += 4
     return value
   },
-  nextInt16: function() {
-    var value = this.bigEndian
+  nextInt16() {
+    const value = this.bigEndian
       ? this.buffer.readInt16BE(this.offset)
       : this.buffer.readInt16LE(this.offset)
     this.offset += 2
     return value
   },
-  nextInt32: function() {
-    var value = this.bigEndian
+  nextInt32() {
+    const value = this.bigEndian
       ? this.buffer.readInt32BE(this.offset)
       : this.buffer.readInt32LE(this.offset)
     this.offset += 4
     return value
   },
-  nextFloat: function() {
-    var value = this.bigEndian
+  nextFloat() {
+    const value = this.bigEndian
       ? this.buffer.readFloatBE(this.offset)
       : this.buffer.readFloatLE(this.offset)
     this.offset += 4
     return value
   },
-  nextDouble: function() {
-    var value = this.bigEndian
+  nextDouble() {
+    const value = this.bigEndian
       ? this.buffer.readDoubleBE(this.offset)
       : this.buffer.readDoubleLE(this.offset)
     this.offset += 8
     return value
   },
-  nextBuffer: function(length) {
-    var value = this.buffer.slice(this.offset, this.offset + length)
+  nextBuffer(length) {
+    const value = this.buffer.slice(this.offset, this.offset + length)
     this.offset += length
     return value
   },
-  remainingLength: function() {
+  remainingLength() {
     return this.endPosition - this.offset
   },
-  nextString: function(length) {
-    var value = this.buffer.toString('utf8', this.offset, this.offset + length)
+  nextString(length) {
+    const value = this.buffer.toString('utf8', this.offset, this.offset + length)
     this.offset += length
     return value
   },
-  mark: function() {
-    var self = this
+  mark() {
+    const self = this
     return {
-      openWithOffset: function(offset) {
+      openWithOffset(offset) {
         offset = (offset || 0) + this.offset
         return new BufferStream(
           self.buffer,
@@ -90,13 +90,13 @@ BufferStream.prototype = {
       offset: this.offset,
     }
   },
-  offsetFrom: function(marker) {
+  offsetFrom(marker) {
     return this.offset - marker.offset
   },
-  skip: function(amount) {
+  skip(amount) {
     this.offset += amount
   },
-  branch: function(offset, length) {
+  branch(offset, length) {
     length =
       typeof length === 'number'
         ? length

@@ -51,7 +51,7 @@ function getBytesPerComponent(format: number): number {
 }
 
 function readExifTag(tiffMarker, stream) {
-  var tagType = stream.nextUInt16(),
+  let tagType = stream.nextUInt16(),
     format = stream.nextUInt16(),
     bytesPerComponent = getBytesPerComponent(format),
     components = stream.nextUInt32(),
@@ -66,11 +66,11 @@ function readExifTag(tiffMarker, stream) {
   if (valueBytes > 4) {
     stream = tiffMarker.openWithOffset(stream.nextUInt32())
   }
-  //we don't want to read strings as arrays
+  // we don't want to read strings as arrays
   if (format === 2) {
     values = stream.nextString(components)
-    //cut off \0 characters
-    var lastNull = values.indexOf('\0')
+    // cut off \0 characters
+    const lastNull = values.indexOf('\0')
     if (lastNull !== -1) {
       values = values.substr(0, lastNull)
     }
@@ -82,8 +82,8 @@ function readExifTag(tiffMarker, stream) {
       values.push(readExifValue(format, stream))
     }
   }
-  //since our stream is a stateful object, we need to skip remaining bytes
-  //so our offset stays correct
+  // since our stream is a stateful object, we need to skip remaining bytes
+  // so our offset stays correct
   if (valueBytes < 4) {
     stream.skip(4 - valueBytes)
   }
@@ -96,7 +96,7 @@ function readIFDSection(tiffMarker, stream, iterator) {
   if (stream.remainingLength() < 2) {
     return
   }
-  var numberOfEntries = stream.nextUInt16(),
+  let numberOfEntries = stream.nextUInt16(),
     tag,
     i
   for (i = 0; i < numberOfEntries; ++i) {
@@ -106,13 +106,13 @@ function readIFDSection(tiffMarker, stream, iterator) {
 }
 
 function readHeader(stream) {
-  var exifHeader = stream.nextString(6)
+  const exifHeader = stream.nextString(6)
   if (exifHeader !== 'Exif\0\0') {
     throw new Error('Invalid EXIF header')
   }
 
-  var tiffMarker = stream.mark()
-  var tiffHeader = stream.nextUInt16()
+  const tiffMarker = stream.mark()
+  const tiffHeader = stream.nextUInt16()
   if (tiffHeader === 0x4949) {
     stream.setBigEndian(false)
   } else if (tiffHeader === 0x4d4d) {
@@ -132,15 +132,15 @@ export default {
   GPSIFD: 3,
   SubIFD: 4,
   InteropIFD: 5,
-  parseTags: function(stream, iterator) {
-    var tiffMarker
+  parseTags(stream, iterator) {
+    let tiffMarker
     try {
       tiffMarker = readHeader(stream)
     } catch (e) {
-      return false //ignore APP1 sections with invalid headers
+      return false // ignore APP1 sections with invalid headers
     }
-    var subIfdOffset, gpsOffset, interopOffset
-    var ifd0Stream = tiffMarker.openWithOffset(stream.nextUInt32()),
+    let subIfdOffset, gpsOffset, interopOffset
+    const ifd0Stream = tiffMarker.openWithOffset(stream.nextUInt32()),
       IFD0 = this.IFD0
     readIFDSection(tiffMarker, ifd0Stream, function(tagType, value, format) {
       switch (tagType) {
@@ -155,19 +155,19 @@ export default {
           break
       }
     })
-    var ifd1Offset = ifd0Stream.nextUInt32()
+    const ifd1Offset = ifd0Stream.nextUInt32()
     if (ifd1Offset !== 0) {
-      var ifd1Stream = tiffMarker.openWithOffset(ifd1Offset)
+      const ifd1Stream = tiffMarker.openWithOffset(ifd1Offset)
       readIFDSection(tiffMarker, ifd1Stream, iterator.bind(null, this.IFD1))
     }
 
     if (gpsOffset) {
-      var gpsStream = tiffMarker.openWithOffset(gpsOffset)
+      const gpsStream = tiffMarker.openWithOffset(gpsOffset)
       readIFDSection(tiffMarker, gpsStream, iterator.bind(null, this.GPSIFD))
     }
 
     if (subIfdOffset) {
-      var subIfdStream = tiffMarker.openWithOffset(subIfdOffset),
+      const subIfdStream = tiffMarker.openWithOffset(subIfdOffset),
         InteropIFD = this.InteropIFD
       readIFDSection(tiffMarker, subIfdStream, function(
         tagType,
@@ -183,7 +183,7 @@ export default {
     }
 
     if (interopOffset) {
-      var interopStream = tiffMarker.openWithOffset(interopOffset)
+      const interopStream = tiffMarker.openWithOffset(interopOffset)
       readIFDSection(
         tiffMarker,
         interopStream,

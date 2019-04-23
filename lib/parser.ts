@@ -1,6 +1,6 @@
 /*jslint browser: true, devel: true, bitwise: false, debug: true, eqeq: false, es5: true, evil: false, forin: false, newcap: false, nomen: true, plusplus: true, regexp: false, unparam: false, sloppy: true, stupid: false, sub: false, todo: true, vars: true, white: true */
 
-var jpeg = require('./jpeg'),
+const jpeg = require('./jpeg'),
   exif = require('./exif'),
   simplify = require('./simplify')
 
@@ -23,7 +23,7 @@ function ExifResult(
 }
 
 ExifResult.prototype = {
-  hasThumbnail: function(mime) {
+  hasThumbnail(mime) {
     if (!this.thumbnailOffset || !this.thumbnailLength) {
       return false
     }
@@ -38,23 +38,23 @@ ExifResult.prototype = {
     }
     return false
   },
-  getThumbnailOffset: function() {
+  getThumbnailOffset() {
     return this.app1Offset + 6 + this.thumbnailOffset
   },
-  getThumbnailLength: function() {
+  getThumbnailLength() {
     return this.thumbnailLength
   },
-  getThumbnailBuffer: function() {
+  getThumbnailBuffer() {
     return this.getThumbnailStream().nextBuffer(this.thumbnailLength)
   },
-  _getThumbnailStream: function() {
+  _getThumbnailStream() {
     return this.startMarker.openWithOffset(this.getThumbnailOffset())
   },
-  getImageSize: function() {
+  getImageSize() {
     return this.imageSize
   },
-  getThumbnailSize: function() {
-    var stream = this.getThumbnailStream(),
+  getThumbnailSize() {
+    let stream = this.getThumbnailStream(),
       size
     jpeg.parseSections(stream, function(sectionType, sectionStream) {
       if (jpeg.getSectionName(sectionType).name === 'SOF') {
@@ -78,32 +78,32 @@ function Parser(stream) {
 }
 
 Parser.prototype = {
-  enableBinaryFields: function(enable) {
+  enableBinaryFields(enable) {
     this.flags.readBinaryTags = !!enable
     return this
   },
-  enablePointers: function(enable) {
+  enablePointers(enable) {
     this.flags.hidePointers = !enable
     return this
   },
-  enableTagNames: function(enable) {
+  enableTagNames(enable) {
     this.flags.resolveTagNames = !!enable
     return this
   },
-  enableImageSize: function(enable) {
+  enableImageSize(enable) {
     this.flags.imageSize = !!enable
     return this
   },
-  enableReturnTags: function(enable) {
+  enableReturnTags(enable) {
     this.flags.returnTags = !!enable
     return this
   },
-  enableSimpleValues: function(enable) {
+  enableSimpleValues(enable) {
     this.flags.simplifyValues = !!enable
     return this
   },
-  parse: function() {
-    var start = this.stream.mark(),
+  parse() {
+    let start = this.stream.mark(),
       stream = start.openWithOffset(0),
       flags = this.flags,
       tags,
@@ -129,7 +129,7 @@ Parser.prototype = {
     } else {
       tags = []
       getTagValue = function(t) {
-        var i
+        let i
         for (i = 0; i < tags.length; ++i) {
           if (tags[i].type === t.type && tags[i].section === t.section) {
             return tags.value
@@ -137,7 +137,7 @@ Parser.prototype = {
         }
       }
       setTagValue = function(t, value) {
-        var i
+        let i
         for (i = 0; i < tags.length; ++i) {
           if (tags[i].type === t.type && tags[i].section === t.section) {
             tags.value = value
@@ -148,7 +148,7 @@ Parser.prototype = {
     }
 
     jpeg.parseSections(stream, function(sectionType, sectionStream) {
-      var validExifHeaders,
+      let validExifHeaders,
         sectionOffset = sectionStream.offsetFrom(start)
       if (sectionType === 0xe1) {
         validExifHeaders = exif.parseTags(sectionStream, function(
@@ -157,7 +157,7 @@ Parser.prototype = {
           value,
           format
         ) {
-          //ignore binary fields if disabled
+          // ignore binary fields if disabled
           if (!flags.readBinaryTags && format === 7) {
             return
           }
@@ -178,7 +178,7 @@ Parser.prototype = {
               return
             }
           }
-          //if flag is set to not store tags, return here after storing pointers
+          // if flag is set to not store tags, return here after storing pointers
           if (!flags.returnTags) {
             return
           }
@@ -187,9 +187,9 @@ Parser.prototype = {
             value = simplify.simplifyValue(value, format)
           }
           if (flags.resolveTagNames) {
-            var sectionTagNames =
+            const sectionTagNames =
               ifdSection === exif.GPSIFD ? tagNames.gps : tagNames.exif
-            var name = sectionTagNames[tagType]
+            let name = sectionTagNames[tagType]
             if (!name) {
               name = tagNames.exif[tagType]
             }
@@ -200,7 +200,7 @@ Parser.prototype = {
             tags.push({
               section: ifdSection,
               type: tagType,
-              value: value,
+              value,
             })
           }
         })

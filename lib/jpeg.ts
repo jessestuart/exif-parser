@@ -1,18 +1,18 @@
 /*jslint browser: true, devel: true, bitwise: false, debug: true, eqeq: false, es5: true, evil: false, forin: false, newcap: false, nomen: true, plusplus: true, regexp: false, unparam: false, sloppy: true, stupid: false, sub: false, todo: true, vars: true, white: true */
 
 export default {
-  parseSections: function(stream, iterator) {
-    var len, markerType
+  parseSections(stream, iterator) {
+    let len, markerType
     stream.setBigEndian(true)
-    //stop reading the stream at the SOS (Start of Stream) marker,
-    //because its length is not stored in the header so we can't
-    //know where to jump to. The only marker after that is just EOI (End Of Image) anyway
+    // stop reading the stream at the SOS (Start of Stream) marker,
+    // because its length is not stored in the header so we can't
+    // know where to jump to. The only marker after that is just EOI (End Of Image) anyway
     while (stream.remainingLength() > 0 && markerType !== 0xda) {
       if (stream.nextUInt8() !== 0xff) {
         throw new Error('Invalid JPEG section offset')
       }
       markerType = stream.nextUInt8()
-      //don't read size from markers that have no datas
+      // don't read size from markers that have no datas
       if ((markerType >= 0xd0 && markerType <= 0xd9) || markerType === 0xda) {
         len = 0
       } else {
@@ -22,16 +22,16 @@ export default {
       stream.skip(len)
     }
   },
-  //stream should be located after SOF section size and in big endian mode, like passed to parseSections iterator
-  getSizeFromSOFSection: function(stream) {
+  // stream should be located after SOF section size and in big endian mode, like passed to parseSections iterator
+  getSizeFromSOFSection(stream) {
     stream.skip(1)
     return {
       height: stream.nextUInt16(),
       width: stream.nextUInt16(),
     }
   },
-  getSectionName: function(markerType) {
-    var name, index
+  getSectionName(markerType) {
+    let name, index
     switch (markerType) {
       case 0xd8:
         name = 'SOI'
@@ -74,9 +74,9 @@ export default {
         break
     }
 
-    var nameStruct = {
+    const nameStruct = {
       index: undefined,
-      name: name,
+      name,
     }
 
     if (typeof index === 'number') {

@@ -1,10 +1,10 @@
 import _ from 'lodash'
 
-const parseNumber = (s: any) => parseInt(s, 10)
+const parseNumber = _.toNumber
 
 // in seconds
-const hours = 3600
-const minutes = 60
+const HOUR_IN_SECONDS = 3600
+const MINUTE_IN_SECONDS = 60
 
 // take date (year, month, day) and time (hour, minutes, seconds) digits in UTC
 // and return a timestamp in seconds
@@ -33,14 +33,14 @@ function parseDateWithTimezoneFormat(dateTimeStr: string) {
   const timeParts = dateTimeStr.substr(11, 8).split(':')
   const timezoneStr = dateTimeStr.substr(19, 6)
   const timezoneParts = timezoneStr.split(':').map(parseNumber)
-  const timezoneOffset = timezoneParts[0] * hours + timezoneParts[1] * minutes
+  const timezoneOffset =
+    timezoneParts[0] * HOUR_IN_SECONDS + timezoneParts[1] * MINUTE_IN_SECONDS
 
   let timestamp = parseDateTimeParts(dateParts, timeParts)
   // minus because the timezoneOffset describes
   // how much the described time is ahead of UTC
   timestamp -= timezoneOffset
 
-  console.log({ timestamp })
   if (!_.isNumber(timestamp) || _.isNaN(timestamp)) {
     return null
   }
@@ -49,12 +49,11 @@ function parseDateWithTimezoneFormat(dateTimeStr: string) {
 
 // parse date with "YYYY:MM:DD hh:mm:ss" format, convert to utc timestamp in seconds
 function parseDateWithSpecFormat(dateTimeStr: string) {
-  const parts = dateTimeStr.split(' '),
-    dateParts = parts[0].split(':'),
-    timeParts = parts[1].split(':')
+  const parts = dateTimeStr.split(' ')
+  const dateParts = parts[0].split(':')
+  const timeParts = parts[1].split(':')
 
   const timestamp = parseDateTimeParts(dateParts, timeParts)
-  console.log({ timestamp })
 
   if (!_.isNumber(timestamp) || _.isNaN(timestamp)) {
     return null
@@ -73,7 +72,6 @@ function parseExifDate(dateTimeStr) {
   const isTimezoneFormat =
     dateTimeStr.length === 25 && dateTimeStr.charAt(10) === 'T'
 
-  console.log({ isSpecFormat, isTimezoneFormat, dateTimeStr })
   if (isTimezoneFormat) {
     return parseDateWithTimezoneFormat(dateTimeStr)
   } else if (isSpecFormat) {
