@@ -1,7 +1,9 @@
-import BufferStream from '../lib/BufferStream'
+import { readFileSync } from 'fs'
+
+import BufferStream from '../lib/bufferstream'
 import jpeg from '../lib/jpeg'
 
-const buf = require('fs').readFileSync(__dirname + '/test.jpg')
+const buf = readFileSync(__dirname + '/test.jpg')
 
 test('test parseSections', () => {
   const expectedSections = [
@@ -21,9 +23,9 @@ test('test parseSections', () => {
   ]
 
   let index = 0
-  const jpegStream = new BufferStream(buf),
-    start = jpegStream.mark()
-  jpeg.parseSections(jpegStream, function(type: any, sectionStream: any) {
+  const jpegStream = new BufferStream(buf)
+  const start = jpegStream.mark()
+  jpeg.parseSections(jpegStream, (type: any, sectionStream: any) => {
     expect(type).toStrictEqual(expectedSections[index].type)
     expect(sectionStream.offsetFrom(start)).toStrictEqual(
       expectedSections[index].offset
