@@ -34,7 +34,7 @@ describe('date parser', () => {
   test('test parse invalid date without timezone should not return anything', () => {
     const dateStr = '1990:AA:14 14:30:14'
     const timestamp = parseDateWithSpecFormat(dateStr)
-    expect(timestamp).toBeUndefined()
+    expect(timestamp).toBeNull()
   })
 
   test('test parse given date with timezone', () => {
@@ -61,7 +61,7 @@ describe('date parser', () => {
     const dateStr = '2004-09-04T23:39:06A08:00'
     const timestamp = parseDateWithTimezoneFormat(dateStr)
 
-    expect(timestamp).toBeUndefined()
+    expect(timestamp).toBeNull()
   })
 
   test('test parseExifDate', () => {

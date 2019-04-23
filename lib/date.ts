@@ -1,8 +1,6 @@
 import _ from 'lodash'
 
-function parseNumber(s) {
-  return parseInt(s, 10)
-}
+const parseNumber = (s: any) => parseInt(s, 10)
 
 // in seconds
 const hours = 3600
@@ -11,8 +9,8 @@ const minutes = 60
 // take date (year, month, day) and time (hour, minutes, seconds) digits in UTC
 // and return a timestamp in seconds
 function parseDateTimeParts(dateParts, timeParts) {
-  dateParts = dateParts.map(parseNumber)
-  timeParts = timeParts.map(parseNumber)
+  dateParts = dateParts.map(_.toNumber)
+  timeParts = timeParts.map(_.toNumber)
   const year = dateParts[0]
   const month = dateParts[1] - 1
   const day = dateParts[2]
@@ -21,6 +19,9 @@ function parseDateTimeParts(dateParts, timeParts) {
   const seconds = timeParts[2]
   const date = Date.UTC(year, month, day, hours, minutes, seconds, 0)
   const timestamp = date / 1000
+  if (!_.isNumber(timestamp) || _.isNaN(timestamp)) {
+    return null
+  }
   return timestamp
 }
 
@@ -39,7 +40,8 @@ function parseDateWithTimezoneFormat(dateTimeStr: string) {
   // how much the described time is ahead of UTC
   timestamp -= timezoneOffset
 
-  if (!_.isNumber(timestamp)) {
+  console.log({ timestamp })
+  if (!_.isNumber(timestamp) || _.isNaN(timestamp)) {
     return null
   }
   return timestamp
@@ -52,8 +54,9 @@ function parseDateWithSpecFormat(dateTimeStr: string) {
     timeParts = parts[1].split(':')
 
   const timestamp = parseDateTimeParts(dateParts, timeParts)
+  console.log({ timestamp })
 
-  if (typeof timestamp !== 'number' || isNaN(timestamp)) {
+  if (!_.isNumber(timestamp) || _.isNaN(timestamp)) {
     return null
   }
   return timestamp
@@ -70,6 +73,7 @@ function parseExifDate(dateTimeStr) {
   const isTimezoneFormat =
     dateTimeStr.length === 25 && dateTimeStr.charAt(10) === 'T'
 
+  console.log({ isSpecFormat, isTimezoneFormat, dateTimeStr })
   if (isTimezoneFormat) {
     return parseDateWithTimezoneFormat(dateTimeStr)
   } else if (isSpecFormat) {

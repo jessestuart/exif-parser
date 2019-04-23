@@ -1,4 +1,4 @@
-function BufferStream(buffer, offset, length, bigEndian) {
+function BufferStream(buffer, offset?: any, length?: any, bigEndian?: any) {
   this.buffer = buffer
   this.offset = offset || 0
   length = typeof length === 'number' ? length : buffer.length

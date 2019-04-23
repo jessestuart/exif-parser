@@ -1,8 +1,11 @@
 {
-  "name": "exif-parser",
-  "description": "A javascript library to extract Exif metadata from images, in node and in the browser.",
-  "version": "0.1.12",
-  "author": "Bruno Windels <bruno.windels@gmail.com>",
+  "name": "@jesses/exif-parser",
+  "description": "A dependency-free Javascript library to extract Exif metadata from images.",
+  "version": "1.0.0",
+  "author": [
+    "Jesse Stuart <hi@jessestuart.com>",
+    "Bruno Windels <bruno.windels@gmail.com>"
+  ],
   "devDependencies": {
     "@babel/cli": "7.4.3",
     "@babel/core": "7.4.3",
@@ -15,15 +18,13 @@
     "@typescript-eslint/eslint-plugin": "1.7.0",
     "@typescript-eslint/parser": "1.7.0",
     "babel-preset-minify": "0.5.0",
-    "browserify": "^7.0.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-prettier": "3.0.1",
     "jest": "24.7.1",
     "lodash": "4.17.11",
     "ts-jest": "24.0.2",
-    "typescript": "3.4.5",
-    "uglify-js": "^2.4.15"
+    "typescript": "3.4.5"
   },
   "keywords": [
     "exif",
@@ -33,13 +34,14 @@
     "jpg",
     "tiff"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/bwindels/exif-parser.git"
+    "url": "https://github.com/jessestuart/exif-parser.git"
   },
   "scripts": {
     "build": "babel --extensions '.ts' cmd/* lib/* --out-dir dist/",
-    "lint": "eslint ./cmd/**/*.ts ./lib/**/*.ts ./test/**/*.ts"
+    "lint": "eslint ./cmd/**/*.ts ./lib/**/*.ts ./test/**/*.ts",
+    "test": "jest"
   }
 }

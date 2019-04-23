@@ -75,7 +75,7 @@ export default {
     }
 
     var nameStruct = {
-      index: null,
+      index: undefined,
       name: name,
     }
 

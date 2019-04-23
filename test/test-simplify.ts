@@ -1,14 +1,20 @@
-var simplify = require('../lib/simplify')
+import simplify from '../lib/simplify'
 
-module.exports = {
-  'test castDateValues': function(test) {
-    var values = {
+interface ExifValues {
+  DateTimeOriginal?: any
+  CreateDate?: any
+  ModifyDate?: any
+}
+
+describe('simplify module', () => {
+  test('test castDateValues', () => {
+    const values = {
       DateTimeOriginal: '1970:01:01 00:00:00',
       CreateDate: '1970-01-01T00:00:00-05:00',
       ModifyDate: '1970-01-01T00:00:00-05:00',
     }
 
-    var setValues = {}
+    const setValues: ExifValues = {}
     function getTagValue(tag) {
       return values[tag.name]
     }
@@ -16,10 +22,9 @@ module.exports = {
       setValues[tag.name] = value
     }
     simplify.castDateValues(getTagValue, setTagValue)
-    test.strictEqual(Object.keys(setValues).length, 3)
-    test.strictEqual(setValues.DateTimeOriginal, 0)
-    test.strictEqual(setValues.CreateDate, 5 * 3600)
-    test.strictEqual(setValues.ModifyDate, 5 * 3600)
-    test.done()
-  },
-}
+    expect(Object.keys(setValues).length).toStrictEqual(3)
+    expect(setValues.DateTimeOriginal).toStrictEqual(0)
+    expect(setValues.CreateDate).toStrictEqual(5 * 3600)
+    expect(setValues.ModifyDate).toStrictEqual(5 * 3600)
+  })
+})
