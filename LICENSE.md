@@ -1,5 +1,4 @@
-The MIT License
-===============
+# The MIT License
 
 Copyright (c) 2010 Bruno Windels <bruno.windels@gmail.com>, Daniel Leinich <leinich@gmx.net>.
 

@@ -71,7 +71,11 @@ BufferStream.prototype = {
     return this.endPosition - this.offset
   },
   nextString(length) {
-    const value = this.buffer.toString('utf8', this.offset, this.offset + length)
+    const value = this.buffer.toString(
+      'utf8',
+      this.offset,
+      this.offset + length
+    )
     this.offset += length
     return value
   },

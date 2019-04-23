@@ -52,9 +52,15 @@ export default {
     degreeTags.forEach(function(t) {
       const degreeVal = getTagValue(t)
       if (degreeVal) {
-        const degreeRef = getTagValue({ section: t.section, type: t.refType, name: t.refName })
+        const degreeRef = getTagValue({
+          section: t.section,
+          type: t.refType,
+          name: t.refName,
+        })
         const degreeNumRef = degreeRef === t.posVal ? 1 : -1
-        const degree = (degreeVal[0] + degreeVal[1] / 60 + degreeVal[2] / 3600) * degreeNumRef
+        const degree =
+          (degreeVal[0] + degreeVal[1] / 60 + degreeVal[2] / 3600) *
+          degreeNumRef
         setTagValue(t, degree)
       }
     })
