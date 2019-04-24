@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 
-import BufferStream from '../lib/bufferstream'
-import jpeg from '../lib/jpeg'
+import BufferStream from '../src/lib/bufferstream'
+import jpeg from '../src/lib/jpeg'
 
 const buf = readFileSync(__dirname + '/test.jpg')
 

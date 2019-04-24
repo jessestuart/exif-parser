@@ -28,6 +28,6 @@
     "strictNullChecks": false,
     "types": ["node", "jest"]
   },
-  "include": ["cmd/**/*", "lib/**/*"],
+  "include": ["src/**/*", "index.ts"],
   "exclude": ["node_modules/**"]
 }

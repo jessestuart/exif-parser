@@ -1,7 +1,7 @@
 {
   "name": "@jesses/exif-parser",
   "description": "A dependency-free library to extract Exif metadata from images.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": [
     "Jesse Stuart <hi@jessestuart.com>",
     "Bruno Windels <bruno.windels@gmail.com>"
@@ -54,8 +54,8 @@
     "url": "https://github.com/jessestuart/exif-parser.git"
   },
   "scripts": {
-    "build": "babel --extensions '.ts' cmd/* lib/* index.ts --out-dir dist/",
-    "lint": "eslint ./cmd/**/*.ts ./lib/**/*.ts ./test/**/*.ts",
+    "build": "babel --extensions '.ts' ./src/**/*.ts -o dist/exif-parser.js",
+    "lint": "eslint ./src/**/*.ts ./test/**/*.ts",
     "test": "jest"
   }
 }

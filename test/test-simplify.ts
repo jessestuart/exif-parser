@@ -1,4 +1,4 @@
-import simplify from '../lib/simplify'
+import simplify from '../src/lib/simplify'
 
 interface ExifValues {
   DateTimeOriginal?: any
@@ -9,8 +9,8 @@ interface ExifValues {
 describe('simplify module', () => {
   test('test castDateValues', () => {
     const values = {
-      DateTimeOriginal: '1970:01:01 00:00:00',
       CreateDate: '1970-01-01T00:00:00-05:00',
+      DateTimeOriginal: '1970:01:01 00:00:00',
       ModifyDate: '1970-01-01T00:00:00-05:00',
     }
 
