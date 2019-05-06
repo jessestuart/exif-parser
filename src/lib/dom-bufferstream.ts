@@ -1,38 +1,31 @@
-/*jslint browser: true, devel: true, bitwise: false, debug: true, eqeq: false, es5: true, evil: false, forin: false, newcap: false, nomen: true, plusplus: true, regexp: false, unparam: false, sloppy: true, stupid: false, sub: false, todo: true, vars: true, white: true */
-
 export default class DOMBufferStream {
-  public view
-  public arrayBuffer
-  public bigEndian
-  public global
-  public length
-  public littleEndian
-  public offset
-  public parentOffset
+  public view: DataView
+  public littleEndian: boolean
+  public arrayBuffer: ArrayBuffer
+  public bigEndian: boolean
+  public global: any
+  public length: any
+  public offset: number
+  public parentOffset: number
 
   public constructor(
-    arrayBuffer,
-    offset,
-    length,
-    bigEndian,
-    global,
-    parentOffset
+    arrayBuffer: ArrayBuffer,
+    offset: number = 0,
+    length: number,
+    bigEndian: boolean,
+    global: any,
+    parentOffset: number
   ) {
     this.global = global
-    offset = offset || 0
     length = length || arrayBuffer.byteLength - offset
     this.arrayBuffer = arrayBuffer.slice(offset, offset + length)
-    this.view = new global.DataView(
-      this.arrayBuffer,
-      0,
-      this.arrayBuffer.byteLength
-    )
+    this.view = new DataView(this.arrayBuffer, 0, this.arrayBuffer.byteLength)
     this.setBigEndian(bigEndian)
     this.offset = 0
     this.parentOffset = (parentOffset || 0) + offset
   }
 
-  public setBigEndian(bigEndian) {
+  public setBigEndian(bigEndian: boolean) {
     this.littleEndian = !bigEndian
   }
 
@@ -105,7 +98,7 @@ export default class DOMBufferStream {
   public mark() {
     const self = this
     return {
-      openWithOffset(offset) {
+      openWithOffset(offset: number) {
         offset = (offset || 0) + this.offset
         return new DOMBufferStream(
           self.arrayBuffer,
@@ -122,6 +115,7 @@ export default class DOMBufferStream {
       },
     }
   }
+
   public offsetFrom(marker) {
     return (
       this.parentOffset +
@@ -149,25 +143,3 @@ export default class DOMBufferStream {
     )
   }
 }
-
-// function DOMBufferStream(
-//   arrayBuffer,
-//   offset,
-//   length,
-//   bigEndian,
-//   global,
-//   parentOffset
-// ) {
-//   this.global = global
-//   offset = offset || 0
-//   length = length || arrayBuffer.byteLength - offset
-//   this.arrayBuffer = arrayBuffer.slice(offset, offset + length)
-//   this.view = new global.DataView(
-//     this.arrayBuffer,
-//     0,
-//     this.arrayBuffer.byteLength
-//   )
-//   this.setBigEndian(bigEndian)
-//   this.offset = 0
-//   this.parentOffset = (parentOffset || 0) + offset
-// }

@@ -1,3 +1,5 @@
+!dist/.gitkeep
+*.tgz
 coverage/
 dist/
 node_modules/

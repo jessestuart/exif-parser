@@ -1,21 +1,25 @@
 {
   "name": "@jesses/exif-parser",
   "description": "A dependency-free library to extract Exif metadata from images.",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": [
     "Jesse Stuart <hi@jessestuart.com>",
     "Bruno Windels <bruno.windels@gmail.com>"
   ],
+  "dependencies": {
+    "luxon": "1.13.0"
+  },
   "devDependencies": {
     "@babel/cli": "7.4.4",
     "@babel/core": "7.4.4",
+    "@babel/plugin-proposal-class-properties": "7.4.4",
     "@babel/preset-env": "7.4.4",
     "@babel/preset-typescript": "7.3.3",
-    "@babel/runtime": "7.4.4",
     "@semantic-release/git": "7.0.8",
     "@types/jest": "24.0.12",
     "@types/lodash": "4.14.123",
-    "@types/node": "11.13.10",
+    "@types/luxon": "1.12.0",
+    "@types/node": "12.0.0",
     "@typescript-eslint/eslint-plugin": "1.7.0",
     "@typescript-eslint/parser": "1.7.0",
     "babel-preset-minify": "0.5.0",
@@ -27,6 +31,7 @@
     "jest": "24.8.0",
     "lodash": "4.17.11",
     "prettier": "1.17.0",
+    "rimraf": "2.6.3",
     "semantic-release": "15.13.3",
     "ts-jest": "24.0.2",
     "tslint": "5.16.0",
@@ -34,6 +39,9 @@
     "tslint-config-standard": "8.0.1",
     "typescript": "3.4.5"
   },
+  "files": [
+    "dist/"
+  ],
   "keywords": [
     "exif",
     "gps",
@@ -44,7 +52,7 @@
     "tiff",
     "typescript"
   ],
-  "main": "dist/index.js",
+  "main": "exif-parser.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
@@ -54,8 +62,10 @@
     "url": "https://github.com/jessestuart/exif-parser.git"
   },
   "scripts": {
-    "build": "babel --extensions '.ts' ./src/**/*.ts -o dist/exif-parser.js",
+    "build": "babel --extensions '.ts' src/ -d dist/",
+    "clean": "rimraf dist/index.js dist/**/*.js",
     "lint": "eslint ./src/**/*.ts ./test/**/*.ts",
+    "prepack": "yarn build",
     "test": "jest"
   }
 }
