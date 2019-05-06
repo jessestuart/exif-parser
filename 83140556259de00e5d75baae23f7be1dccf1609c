@@ -1,3 +1,8 @@
 [ver:1,total:120]
 .gtm/terminal.app:100,1557151200:100,r
 package.json:20,1557151200:20,m
+
+[ver:1,total:180]
+.gtm/terminal.app:135,1557151200:135,r
+package.json:30,1557151200:30,m
+babel.config.js:15,1557151200:15,m
