@@ -7,7 +7,7 @@
     "Bruno Windels <bruno.windels@gmail.com>"
   ],
   "dependencies": {
-    "luxon": "1.19.3"
+    "luxon": "1.20.0"
   },
   "devDependencies": {
     "@babel/cli": "7.6.4",
