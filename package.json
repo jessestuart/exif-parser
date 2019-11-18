@@ -32,7 +32,7 @@
     "lodash": "4.17.15",
     "prettier": "1.19.1",
     "rimraf": "2.7.1",
-    "semantic-release": "15.13.30",
+    "semantic-release": "15.13.31",
     "ts-jest": "24.1.0",
     "tslint": "5.20.0",
     "tslint-config-prettier": "1.18.0",
