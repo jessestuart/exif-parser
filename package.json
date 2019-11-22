@@ -33,7 +33,7 @@
     "prettier": "1.19.1",
     "rimraf": "2.7.1",
     "semantic-release": "15.13.31",
-    "ts-jest": "24.1.0",
+    "ts-jest": "24.2.0",
     "tslint": "5.20.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-config-standard": "8.0.1",
