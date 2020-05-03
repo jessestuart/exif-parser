@@ -1,7 +1,7 @@
 {
   "name": "@jesses/exif-parser",
   "description": "A dependency-free library to extract Exif metadata from images.",
-  "version": "1.1.26",
+  "version": "1.1.27",
   "author": [
     "Jesse Stuart <hi@jessestuart.com>",
     "Bruno Windels <bruno.windels@gmail.com>"
