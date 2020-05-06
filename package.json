@@ -18,7 +18,7 @@
     "@semantic-release/git": "7.0.18",
     "@types/jest": "24.9.1",
     "@types/lodash": "4.14.150",
-    "@types/luxon": "1.22.1",
+    "@types/luxon": "1.24.0",
     "@types/node": "12.12.38",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
