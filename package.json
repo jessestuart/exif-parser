@@ -10,8 +10,8 @@
     "luxon": "1.25.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.12.7",
-    "@babel/core": "7.12.7",
+    "@babel/cli": "7.12.8",
+    "@babel/core": "7.12.8",
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/preset-env": "7.12.7",
     "@babel/preset-typescript": "7.12.7",
