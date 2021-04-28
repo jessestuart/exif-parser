@@ -24,7 +24,7 @@
     "@typescript-eslint/parser": "1.13.0",
     "babel-preset-minify": "0.5.1",
     "codecov": "3.8.1",
-    "core-js": "3.11.0",
+    "core-js": "3.11.1",
     "eslint": "7.25.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
